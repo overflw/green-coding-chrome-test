@@ -5,7 +5,7 @@ const microtime = require("microtime");
 let sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // Select quality
-const quality = '560p';
+const quality = '480p';
 
 (async () => {
   console.log(microtime.now(), " Launching Browser");

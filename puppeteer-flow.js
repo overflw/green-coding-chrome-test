@@ -4,6 +4,9 @@ const microtime = require("microtime");
 
 let sleep = ms => new Promise(r => setTimeout(r, ms));
 
+// Select quality
+const quality = '560p';
+
 (async () => {
   console.log(microtime.now(), " Launching Browser");
   const browser = await puppeteer.launch({
@@ -51,8 +54,6 @@ let sleep = ms => new Promise(r => setTimeout(r, ms));
     await sleep(500);
   });
 
-  // Select quality
-  const quality = '480p';
   let selection;
   let qualityOptions = await page.$$(".ytp-menuitem")
   let qualityOptionsValues = await Promise.all(qualityOptions.map(async (el) => await (await el.getProperty('innerText')).jsonValue()));
@@ -68,7 +69,7 @@ let sleep = ms => new Promise(r => setTimeout(r, ms));
   if (!selection) {
     let qualityTexts = qualityOptions.map(async (el) => await el.getProperty('innerText')).join('\n');
     console.log('"' + quality + '" not found. Options are: \n\nHighest\n' + qualityTexts);
-    //settingsButton.click();                               // click menu button to close
+    // settingsButton.click();                               // click menu button to close
   }
 
   if (await (await selection.getProperty('aria-checked')).jsonValue() === undefined) { // not checked
